@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package meetings;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+
+service Meetings {
+
+    rpc GetMeeting(GetMeetingRequest) returns (Meeting) {}
+
+    rpc ListMeetings(ListMeetingsRequest) returns (ListMeetingsResponse) {}
+
+    rpc CreateMeeting(CreateMeetingRequest) returns (Meeting) {}
+
+    rpc UpdateMeeting(UpdateMeetingRequest) returns (Meeting) {}
+
+    rpc DeleteMeeting(DeleteMeetingRequest) returns (google.protobuf.Empty) {}
+}
+
+message Time {
+    string date_time = 1;
+    string time_zone = 2;
+}
+
+message Meeting {
+    string parent = 1;
+    string id = 2;
+    Time start = 3;
+    Time end = 4;
+    string title = 5;
+    string description = 6; 
+    string location = 7;
+}
+
+message GetMeetingRequest {
+    string id = 1;
+}
+
+message ListMeetingsRequest {
+    string parent = 1;
+    int32 page_size = 2;
+    string page_token = 3;
+}
+
+message ListMeetingsResponse {
+    repeated Meeting meetings = 1;
+    string next_page_token = 2;
+}
+
+message CreateMeetingRequest {
+    string parent = 1;
+    Meeting meeting = 2;
+}
+
+message UpdateMeetingRequest {
+    Meeting meeting = 1;
+    google.protobuf.FieldMask update_mask = 2;
+}
+
+message DeleteMeetingRequest {
+    string id = 1;
+}

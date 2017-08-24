@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package users;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+
+service Users {
+
+    rpc GetUser(GetUserRequest) returns (User) {};
+
+    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {};
+
+    rpc CreateUser(CreateUserRequest) returns (User) {};
+
+    rpc UpdateUser(UpdateUserRequest) returns (User) {};
+
+    rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {};
+
+}
+
+message User {
+    string email = 1;
+    string name = 2;
+    string phone = 3;
+}
+
+message GetUserRequest {
+    string email = 1;
+}
+
+message ListUsersRequest {
+    int32 page_size = 1;
+    string page_token = 2;
+}
+
+message ListUsersResponse {
+    repeated User users = 1;
+    string next_page_token = 2;
+}
+
+message CreateUserRequest {
+    User user = 1;
+}
+
+message UpdateUserRequest {
+    User user = 1;
+    google.protobuf.FieldMask update_mask = 2;
+}
+
+message DeleteUserRequest {
+    string email = 1;
+}
