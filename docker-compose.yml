@@ -1,15 +1,13 @@
 version: "3"
 services:
   cli:
+    build: .
     stdin_open: true
     tty: true
     command: /bin/bash
-    image: therealplato/grpcc-container:latest
     links:
       - meetings
       - users
-    volumes:
-      - ./pb:/proto
   meetings:
     build: .
     entrypoint: ./cmd/meetings/meetings
