@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+
 	"github.com/tatuhuttunen/booking-calendar/pb/users"
 	menu "github.com/turret-io/go-menu/menu"
 	"golang.org/x/net/context"
@@ -19,8 +20,8 @@ func listUsers(args ...string) error {
 	}
 
 	res, err := cls.usersClient.ListUsers(context.Background(), &users.ListUsersRequest{
-		pageSize,
-		args[1],
+		PageSize:  pageSize,
+		PageToken: args[1],
 	})
 	fmt.Println("users")
 	fmt.Println(res.Users)
@@ -37,10 +38,10 @@ func createUsers(args ...string) error {
 	}
 
 	fmt.Println(cls.usersClient.CreateUser(context.Background(), &users.CreateUserRequest{
-		&users.User{
-			args[0],
-			args[1],
-			args[2],
+		User: &users.User{
+			Email: args[0],
+			Name:  args[1],
+			Phone: args[2],
 		},
 	}))
 	return nil
@@ -48,8 +49,16 @@ func createUsers(args ...string) error {
 
 func usersCli(args ...string) error {
 	commandOptions := []menu.CommandOption{
-		menu.CommandOption{"list", "pageSize pageToken", listUsers},
-		menu.CommandOption{"create", "email name phone", createUsers},
+		menu.CommandOption{
+			Command:     "list",
+			Description: "pageSize pageToken",
+			Function:    listUsers,
+		},
+		menu.CommandOption{
+			Command:     "create",
+			Description: "email name phone",
+			Function:    createUsers,
+		},
 	}
 
 	menuOptions := menu.NewMenuOptions("users cli> ", 0, "")

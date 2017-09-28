@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+
 	"github.com/tatuhuttunen/booking-calendar/pb/meetings"
 	menu "github.com/turret-io/go-menu/menu"
 	"golang.org/x/net/context"
@@ -19,9 +20,9 @@ func listMeetings(args ...string) error {
 	}
 
 	res, err := cls.meetingsClient.ListMeetings(context.Background(), &meetings.ListMeetingsRequest{
-		args[0],
-		pageSize,
-		args[2],
+		Parent:    args[0],
+		PageSize:  pageSize,
+		PageToken: args[2],
 	})
 
 	fmt.Println("meetings:")
@@ -34,21 +35,21 @@ func listMeetings(args ...string) error {
 
 func createMeeting(args ...string) error {
 	fmt.Println(cls.meetingsClient.CreateMeeting(context.Background(), &meetings.CreateMeetingRequest{
-		"",
-		&meetings.Meeting{
-			"parent",
-			"id",
-			&meetings.Time{
-				"datetime",
-				"tz",
+		Parent: "",
+		Meeting: &meetings.Meeting{
+			Parent: "parent",
+			Id:     "id",
+			Start: &meetings.Time{
+				DateTime: "datetime",
+				TimeZone: "tz",
 			},
-			&meetings.Time{
-				"datetime",
-				"tz",
+			End: &meetings.Time{
+				DateTime: "datetime",
+				TimeZone: "tz",
 			},
-			"title",
-			"desc",
-			"location",
+			Title:       "title",
+			Description: "desc",
+			Location:    "location",
 		},
 	}))
 	return nil
@@ -56,8 +57,16 @@ func createMeeting(args ...string) error {
 
 func meetingsCli(args ...string) error {
 	commandOptions := []menu.CommandOption{
-		menu.CommandOption{"list", "parent pageSize pageToken", listMeetings},
-		menu.CommandOption{"create", "", createMeeting},
+		menu.CommandOption{
+			Command:     "list",
+			Description: "parent pageSize pageToken",
+			Function:    listMeetings,
+		},
+		menu.CommandOption{
+			Command:     "create",
+			Description: "",
+			Function:    createMeeting,
+		},
 	}
 
 	menuOptions := menu.NewMenuOptions("meetings cli> ", 0, "")

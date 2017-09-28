@@ -5,10 +5,11 @@ import (
 
 	"log"
 
+	"strconv"
+
 	"github.com/tatuhuttunen/booking-calendar/pb/meetings"
 	"github.com/tatuhuttunen/booking-calendar/pb/users"
 	"google.golang.org/grpc"
-	"strconv"
 )
 
 type clientsCollection struct {
@@ -31,8 +32,16 @@ func main() {
 	}
 
 	commandOptions := []menu.CommandOption{
-		menu.CommandOption{"meetings", "manage meetings", meetingsCli},
-		menu.CommandOption{"users", "manage users", usersCli},
+		menu.CommandOption{
+			Command:     "meetings",
+			Description: "manage meetings",
+			Function:    meetingsCli,
+		},
+		menu.CommandOption{
+			Command:     "users",
+			Description: "manage users",
+			Function:    usersCli,
+		},
 	}
 
 	menuOptions := menu.NewMenuOptions("calendar cli> ", 0, "")
