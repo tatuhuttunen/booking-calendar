@@ -16,7 +16,7 @@ func listUsers(args ...string) error {
 
 	pageSize, err := intArg(args[0])
 	if err != nil {
-		return errors.New("Invalid page size")
+		return errors.New("invalid page size")
 	}
 
 	res, err := cls.usersClient.ListUsers(context.Background(), &users.ListUsersRequest{
@@ -49,21 +49,21 @@ func createUsers(args ...string) error {
 
 func usersCli(args ...string) error {
 	commandOptions := []menu.CommandOption{
-		menu.CommandOption{
+		{
 			Command:     "list",
 			Description: "pageSize pageToken",
 			Function:    listUsers,
 		},
-		menu.CommandOption{
+		{
 			Command:     "create",
 			Description: "email name phone",
 			Function:    createUsers,
 		},
 	}
 
-	menuOptions := menu.NewMenuOptions("users cli> ", 0, "")
+	menuOptions := menu.NewMenuOptions("users cli> ", 0)
 
-	menu := menu.NewMenu(commandOptions, menuOptions)
-	menu.Start()
+	m := menu.NewMenu(commandOptions, menuOptions)
+	m.Start()
 	return nil
 }

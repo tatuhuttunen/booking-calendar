@@ -1,7 +1,7 @@
 package main
 
 import (
-	menu "github.com/turret-io/go-menu/menu"
+	"github.com/turret-io/go-menu/menu"
 
 	"log"
 
@@ -32,22 +32,22 @@ func main() {
 	}
 
 	commandOptions := []menu.CommandOption{
-		menu.CommandOption{
+		{
 			Command:     "meetings",
 			Description: "manage meetings",
 			Function:    meetingsCli,
 		},
-		menu.CommandOption{
+		{
 			Command:     "users",
 			Description: "manage users",
 			Function:    usersCli,
 		},
 	}
 
-	menuOptions := menu.NewMenuOptions("calendar cli> ", 0, "")
+	menuOptions := menu.NewMenuOptions("calendar cli> ", 0)
 
-	menu := menu.NewMenu(commandOptions, menuOptions)
-	menu.Start()
+	m := menu.NewMenu(commandOptions, menuOptions)
+	m.Start()
 }
 
 // mustDial ensures a tcp connection to specified address.

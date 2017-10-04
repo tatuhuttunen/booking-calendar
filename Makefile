@@ -1,4 +1,4 @@
-.PHONY: pb vet run grpc-cli
+.PHONY: pb vet run dependencies update
 
 pb:
 	for f in pb/**/*.proto; do \
@@ -12,3 +12,9 @@ vet:
 run:
 	docker-compose build
 	docker-compose up
+
+dependencies:
+	glide install
+
+update:
+	glide update

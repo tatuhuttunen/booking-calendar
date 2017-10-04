@@ -1,0 +1,18 @@
+package: github.com/tatuhuttunen/booking-calendar
+import:
+- package: github.com/golang/protobuf
+  subpackages:
+  - proto
+  - ptypes/empty
+- package: github.com/turret-io/go-menu
+  version: ^1.0.2
+  subpackages:
+  - menu
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/genproto
+  subpackages:
+  - protobuf/field_mask
+- package: google.golang.org/grpc
+  version: ^1.6.0

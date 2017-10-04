@@ -16,7 +16,7 @@ func listMeetings(args ...string) error {
 
 	pageSize, err := intArg(args[1])
 	if err != nil {
-		return errors.New("Invalid page size")
+		return errors.New("invalid page size")
 	}
 
 	res, err := cls.meetingsClient.ListMeetings(context.Background(), &meetings.ListMeetingsRequest{
@@ -57,21 +57,21 @@ func createMeeting(args ...string) error {
 
 func meetingsCli(args ...string) error {
 	commandOptions := []menu.CommandOption{
-		menu.CommandOption{
+		{
 			Command:     "list",
 			Description: "parent pageSize pageToken",
 			Function:    listMeetings,
 		},
-		menu.CommandOption{
+		{
 			Command:     "create",
 			Description: "",
 			Function:    createMeeting,
 		},
 	}
 
-	menuOptions := menu.NewMenuOptions("meetings cli> ", 0, "")
+	menuOptions := menu.NewMenuOptions("meetings cli> ", 0)
 
-	menu := menu.NewMenu(commandOptions, menuOptions)
-	menu.Start()
+	m := menu.NewMenu(commandOptions, menuOptions)
+	m.Start()
 	return nil
 }
