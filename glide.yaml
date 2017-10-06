@@ -4,10 +4,7 @@ import:
   subpackages:
   - proto
   - ptypes/empty
-- package: github.com/turret-io/go-menu
-  version: ^1.0.2
-  subpackages:
-  - menu
+  - protoc-gen-go
 - package: golang.org/x/net
   subpackages:
   - context
@@ -15,4 +12,9 @@ import:
   subpackages:
   - protobuf/field_mask
 - package: google.golang.org/grpc
-  version: ^1.6.0
+  version: 1.6.0
+- package: github.com/grpc-ecosystem/grpc-gateway
+  version: 1.2.2
+  subpackages:
+  - protoc-gen-grpc-gateway
+  - protoc-gen-swagger

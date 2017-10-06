@@ -1,15 +1,22 @@
 syntax = "proto3";
 
-package meetings;
+package booking_calendar.meetings;
+
+option go_package = "meetings";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/field_mask.proto";
+import "google/api/annotations.proto";
 
 service Meetings {
 
     rpc GetMeeting(GetMeetingRequest) returns (Meeting) {}
 
-    rpc ListMeetings(ListMeetingsRequest) returns (ListMeetingsResponse) {}
+    rpc ListMeetings(ListMeetingsRequest) returns (ListMeetingsResponse) {
+        option (google.api.http) = {
+            get: "/v1/meetings"
+        };
+    }
 
     rpc CreateMeeting(CreateMeetingRequest) returns (Meeting) {}
 

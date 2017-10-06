@@ -1,19 +1,29 @@
-hash: d3568cdfffc387092045e73d5b287e5e48e7db265b4d78e529a1b02ce7ef1fae
-updated: 2017-10-05T01:49:09.352930093+03:00
+hash: e83693b5a3480a08b633d08506c7af4f6f5dd7996ad0472cd5d8aa570464d764
+updated: 2017-10-06T03:31:20.382666047+03:00
 imports:
+- name: github.com/golang/glog
+  version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
 - name: github.com/golang/protobuf
   version: 130e6b02ab059e7b717a096f397c5b60111cae74
   subpackages:
+  - jsonpb
   - proto
+  - protoc-gen-go
+  - protoc-gen-go/descriptor
   - ptypes
   - ptypes/any
   - ptypes/duration
   - ptypes/empty
+  - ptypes/struct
   - ptypes/timestamp
-- name: github.com/turret-io/go-menu
-  version: df362314a4307f8be52438047a8ebda13a3bea9c
+- name: github.com/grpc-ecosystem/grpc-gateway
+  version: 589b126116b5fc961939b3e156c29e4d9d58222f
   subpackages:
-  - menu
+  - protoc-gen-grpc-gateway
+  - protoc-gen-swagger
+  - runtime
+  - runtime/internal
+  - utilities
 - name: golang.org/x/net
   version: a04bdaca5b32abe1c069418fb7088ae607de5bd0
   subpackages:
@@ -34,6 +44,7 @@ imports:
 - name: google.golang.org/genproto
   version: f676e0f3ac6395ff1a529ae59a6670878a8371a6
   subpackages:
+  - googleapis/api/annotations
   - googleapis/rpc/status
   - protobuf/field_mask
 - name: google.golang.org/grpc

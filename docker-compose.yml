@@ -1,16 +1,16 @@
 version: "3"
 services:
-  cli:
-    build: .
-    stdin_open: true
-    tty: true
-    command: /bin/bash
-    links:
-      - meetings
-      - users
   meetings:
     build: .
     entrypoint: ./cmd/meetings/meetings
   users:
     build: .
     entrypoint: ./cmd/users/users
+  api:
+    build: .
+    command: ./cmd/api/api
+    ports:
+      - 8080:8080
+    links:
+      - meetings
+      - users
