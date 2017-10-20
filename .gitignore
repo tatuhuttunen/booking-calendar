@@ -17,4 +17,4 @@
 
 vendor/
 
-swagger.json
+*swagger.json

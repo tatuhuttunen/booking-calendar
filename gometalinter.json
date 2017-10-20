@@ -1,0 +1,8 @@
+{
+  "Deadline": "120s",
+  "EnableGC": true,
+  "Enable": ["vet", "vetshadow", "deadcode", "golint", "ineffassign", "goconst", "gosimple", "gofmt", "misspell"],
+  "Test": true,
+  "Vendor": true,
+  "Exclude": ["pb.go", "pb.gw.go"]
+}

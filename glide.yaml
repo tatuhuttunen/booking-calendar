@@ -4,7 +4,6 @@ import:
   subpackages:
   - proto
   - ptypes/empty
-  - protoc-gen-go
 - package: golang.org/x/net
   subpackages:
   - context
@@ -15,6 +14,3 @@ import:
   version: 1.6.0
 - package: github.com/grpc-ecosystem/grpc-gateway
   version: 1.2.2
-  subpackages:
-  - protoc-gen-grpc-gateway
-  - protoc-gen-swagger

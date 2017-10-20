@@ -14,7 +14,7 @@ service Meetings {
 
     rpc ListMeetings(ListMeetingsRequest) returns (ListMeetingsResponse) {
         option (google.api.http) = {
-            get: "/v1/meetings"
+            get: "/meetings"
         };
     }
 

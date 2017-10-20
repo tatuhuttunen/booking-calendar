@@ -1,37 +1,23 @@
-.PHONY: pb vet run dependencies update gateway clean
+.PHONY: protos gateway lint vendor-update vendor-install run clean
 
-pb:
+protos:
 	for f in pb/**/*.proto; do \
-		protoc -I/usr/local/include -I. \
-		  -I $(GOPATH)/src \
-		  -I $(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		  --go_out=plugins=grpc:. \
-		  $$f; \
+		docker run --rm -v $$PWD:$$PWD -w $$PWD znly/protoc --go_out=plugins=grpc:. -I. $$f; \
 		echo compiled: $$f; \
 	done
 
 gateway:
 	for f in pb/**/*.proto; do \
-		protoc -I/usr/local/include -I. \
-			-I$(GOPATH)/src \
-			-I$(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-			--grpc-gateway_out=logtostderr=true:. \
-			$$f; \
-		protoc -I/usr/local/include -I. \
-			-I$(GOPATH)/src \
-			-I$(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-			--swagger_out=logtostderr=true:. \
-			$$f; \
+		docker run --rm -v $$PWD:$$PWD -w $$PWD znly/protoc --grpc-gateway_out=logtostderr=true:. -I. $$f; \
+		echo compiled gateway: $$f; \
+		docker run --rm -v $$PWD:$$PWD -w $$PWD znly/protoc --swagger_out=logtostderr=true:. -I. $$f; \
+		echo compiled swagger: $$f; \
 	done
 
-	cat pb/**/*.swagger.json | \
-	jq '.info.title = "Booking Calendar"' | \
-	jq '.info.version = "1.0.0"' | \
-	jq '.server.url = "http://localhost:8080"' | \
-	jq --slurp 'reduce .[] as $$item ({}; . * $$item)' > cmd/api/swagger.json
+	docker run --rm -v $$PWD:/go/src/path -w /go/src/path tatuhuttunen/jq sh bin/swagger_processing.sh
 
-vet:
-	./bin/lint.sh
+lint:
+	docker run --rm -v $$PWD:/go/src/path -w /go/src/path moogar0880/gometalinter:latest --config=gometalinter.json ./...
 
 run:
 	docker-compose build
@@ -40,8 +26,8 @@ run:
 clean:
 	docker-compose down
 
-dependencies:
-	glide install
+vendor-install:
+	docker run --rm -it -v $$PWD:/go/src/github.com/tatuhuttunen/booking-calendar -w /go/src/github.com/tatuhuttunen/booking-calendar instrumentisto/glide install
 
-update:
-	glide update
+vendor-update:
+	docker run --rm -it -v $$PWD:/go/src/github.com/tatuhuttunen/booking-calendar -w /go/src/github.com/tatuhuttunen/booking-calendar instrumentisto/glide update
