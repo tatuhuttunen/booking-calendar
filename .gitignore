@@ -18,3 +18,7 @@
 vendor/
 
 *swagger.json
+
+*.pb.go
+
+*.pb.gw.go
