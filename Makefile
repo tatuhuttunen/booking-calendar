@@ -14,7 +14,7 @@ gateway:
 		echo compiled swagger: $$f; \
 	done
 
-	docker run --rm -v $$PWD:/go/src/path -w /go/src/path tatuhuttunen/jq sh bin/swagger_processing.sh
+	docker run --rm -v $$PWD:/go/src/path -w /go/src/path tatuhuttunen/jq-container sh bin/swagger_processing.sh
 
 lint:
 	docker run --rm -v $$PWD:/go/src/path -w /go/src/path moogar0880/gometalinter:latest --config=gometalinter.json ./...
@@ -27,7 +27,9 @@ clean:
 	docker-compose down
 
 vendor-install:
-	docker run --rm -it -v $$PWD:/go/src/github.com/tatuhuttunen/booking-calendar -w /go/src/github.com/tatuhuttunen/booking-calendar instrumentisto/glide install
+	docker run --rm -it -v $$PWD:/go/src/github.com/tatuhuttunen/booking-calendar \
+	-w /go/src/github.com/tatuhuttunen/booking-calendar instrumentisto/glide install
 
 vendor-update:
-	docker run --rm -it -v $$PWD:/go/src/github.com/tatuhuttunen/booking-calendar -w /go/src/github.com/tatuhuttunen/booking-calendar instrumentisto/glide update
+	docker run --rm -it -v $$PWD:/go/src/github.com/tatuhuttunen/booking-calendar \
+	-w /go/src/github.com/tatuhuttunen/booking-calendar instrumentisto/glide update
