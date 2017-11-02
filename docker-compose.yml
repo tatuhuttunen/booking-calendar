@@ -3,14 +3,34 @@ services:
   meetings:
     build: .
     entrypoint: ./cmd/meetings/meetings
+    networks:
+      - backend
   users:
     build: .
     entrypoint: ./cmd/users/users
+    networks:
+      - backend
   api:
     build: .
     command: ./cmd/api/api
     ports:
       - 8080:8080
-    links:
-      - meetings
-      - users
+    networks:
+      - frontend
+      - backend
+  grpcc:
+    image: tatuhuttunen/grpcc-container
+    stdin_open: true
+    tty: true
+    command: bash
+    volumes:
+      - ./pb:/protos
+    networks:
+      - backend
+
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
