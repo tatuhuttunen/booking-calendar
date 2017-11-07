@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 services:
   meetings:
     build: .
@@ -24,7 +24,8 @@ services:
     tty: true
     command: bash
     volumes:
-      - ./pb:/protos
+      - ./pb/meetings:/protobuf/meetings
+      - ./pb/users:/protobuf/users
     networks:
       - backend
 

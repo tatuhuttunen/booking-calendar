@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package booking_calendar.meetings;
+package calendar;
 
 option go_package = "meetings";
 
